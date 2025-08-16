@@ -1,0 +1,8 @@
+{
+  "name": "AI Exam Companion",
+  "description": "An intelligent web application designed to assist students in their exam preparation. It features an exam countdown, AI-powered formula vault, reasoning puzzle generator, quiz generation with personalized performance analysis, revision flashcards, and more to help you study smarter.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
