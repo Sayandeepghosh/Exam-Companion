@@ -24,7 +24,7 @@ export const PuzzleIcon = (props: IconProps) => <MaterialIcon {...props}>extensi
 export const FocusIcon = (props: IconProps) => <MaterialIcon {...props}>center_focus_strong</MaterialIcon>;
 export const SunIcon = (props: IconProps) => <MaterialIcon {...props}>light_mode</MaterialIcon>;
 export const MoonIcon = (props: IconProps) => <MaterialIcon {...props}>dark_mode</MaterialIcon>;
-export const MenuIcon = (props: IconProps) => <MaterialIcon {...props}>menu</MaterialIcon>;
+export const MoreVertIcon = (props: IconProps) => <MaterialIcon {...props}>more_vert</MaterialIcon>;
 export const CloseIcon = (props: IconProps) => <MaterialIcon {...props}>close</MaterialIcon>;
 export const CameraIcon = (props: IconProps) => <MaterialIcon {...props}>photo_camera</MaterialIcon>;
 export const TextIcon = (props: IconProps) => <MaterialIcon {...props}>title</MaterialIcon>;

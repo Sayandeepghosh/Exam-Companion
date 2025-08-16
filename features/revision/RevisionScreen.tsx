@@ -12,14 +12,12 @@ const FlashcardViewer: React.FC = () => {
     const [newFront, setNewFront] = useState('');
     const [newBack, setNewBack] = useState('');
 
-    // OCR State
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [isScanning, setIsScanning] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
 
     useEffect(() => {
-        // Cleanup function to stop camera stream when component unmounts
         return () => {
             if (streamRef.current) {
                 streamRef.current.getTracks().forEach(track => track.stop());
@@ -53,9 +51,9 @@ const FlashcardViewer: React.FC = () => {
         const card = reviewDeck[currentIndex];
         let nextInterval;
         switch (ease) {
-            case 'Hard': nextInterval = 10 * 60 * 1000; break; // 10 minutes
-            case 'Good': nextInterval = 24 * 60 * 60 * 1000; break; // 1 day
-            case 'Easy': nextInterval = 4 * 24 * 60 * 60 * 1000; break; // 4 days
+            case 'Hard': nextInterval = 10 * 60 * 1000; break; 
+            case 'Good': nextInterval = 24 * 60 * 60 * 1000; break; 
+            case 'Easy': nextInterval = 4 * 24 * 60 * 60 * 1000; break;
         }
         
         const updatedFlashcards = flashcards.map(c => 
@@ -126,36 +124,38 @@ const FlashcardViewer: React.FC = () => {
     const currentCard = reviewDeck[currentIndex];
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-xl font-medium">Flashcard Review</h2>
-            {reviewDeck.length > 0 ? (
-                 <Card>
-                    <div 
-                        className="relative w-full h-64 rounded-lg flex items-center justify-center text-2xl font-bold text-center p-4 cursor-pointer"
-                        onClick={() => setIsFlipped(!isFlipped)}
-                        style={{ perspective: '1000px' }}
-                    >
-                         <div className={`absolute w-full h-full transition-transform duration-700 [transform-style:preserve-3d] bg-surface-variant dark:bg-dark-surface-variant rounded-2xl p-4 flex items-center justify-center [backface-visibility:hidden] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}>
-                            {currentCard?.front}
+        <div className="space-y-8">
+            <Card>
+                <h2 className="text-2xl font-medium mb-4">Flashcard Review</h2>
+                {reviewDeck.length > 0 ? (
+                     <>
+                        <div 
+                            className="relative w-full h-64 rounded-lg flex items-center justify-center text-2xl font-bold text-center p-4 cursor-pointer"
+                            onClick={() => setIsFlipped(!isFlipped)}
+                            style={{ perspective: '1000px' }}
+                        >
+                             <div className={`absolute w-full h-full transition-transform duration-700 [transform-style:preserve-3d] bg-surface-variant dark:bg-dark-surface-variant rounded-2xl p-4 flex items-center justify-center [backface-visibility:hidden] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}>
+                                {currentCard?.front}
+                            </div>
+                            <div className={`absolute w-full h-full transition-transform duration-700 [transform-style:preserve-3d] bg-primary-container dark:bg-dark-primary-container text-on-primary-container dark:text-dark-on-primary-container rounded-2xl p-4 flex items-center justify-center [backface-visibility:hidden] [transform:rotateY(-180deg)] ${isFlipped ? '[transform:rotateY(0deg)]' : ''}`}>
+                                {currentCard?.back}
+                            </div>
                         </div>
-                        <div className={`absolute w-full h-full transition-transform duration-700 [transform-style:preserve-3d] bg-primary-container dark:bg-dark-primary-container text-on-primary-container dark:text-dark-on-primary-container rounded-2xl p-4 flex items-center justify-center [backface-visibility:hidden] [transform:rotateY(-180deg)] ${isFlipped ? '[transform:rotateY(0deg)]' : ''}`}>
-                            {currentCard?.back}
-                        </div>
-                    </div>
-                     {isFlipped && (
-                        <div className="mt-4 grid grid-cols-3 gap-2">
-                             <button onClick={() => handleAnswer('Hard')} className="bg-error-container text-on-error-container font-semibold p-3 rounded-full hover:opacity-90 transition">Hard</button>
-                             <button onClick={() => handleAnswer('Good')} className="bg-tertiary-container text-on-tertiary-container font-semibold p-3 rounded-full hover:opacity-90 transition">Good</button>
-                             <button onClick={() => handleAnswer('Easy')} className="bg-primary-container text-on-primary-container font-semibold p-3 rounded-full hover:opacity-90 transition">Easy</button>
-                        </div>
-                     )}
-                 </Card>
-            ) : (
-                <p className="text-center text-on-surface-variant dark:text-dark-on-surface-variant py-10">No flashcards to review right now. Come back later or add some new ones!</p>
-            )}
+                         {isFlipped && (
+                            <div className="mt-4 grid grid-cols-3 gap-2 animate-fade-in">
+                                 <button onClick={() => handleAnswer('Hard')} className="bg-error-container text-on-error-container font-semibold p-3 rounded-full hover:opacity-90 transition">Hard</button>
+                                 <button onClick={() => handleAnswer('Good')} className="bg-tertiary-container text-on-tertiary-container font-semibold p-3 rounded-full hover:opacity-90 transition">Good</button>
+                                 <button onClick={() => handleAnswer('Easy')} className="bg-primary-container text-on-primary-container font-semibold p-3 rounded-full hover:opacity-90 transition">Easy</button>
+                            </div>
+                         )}
+                     </>
+                ) : (
+                    <p className="text-center text-on-surface-variant dark:text-dark-on-surface-variant py-10">No flashcards to review right now!</p>
+                )}
+            </Card>
 
             <Card>
-                <h3 className="text-lg font-medium mb-4">Add New Flashcard</h3>
+                <h3 className="text-2xl font-medium mb-4">Add New Flashcard</h3>
                 <div className="space-y-4">
                     <button 
                       type="button" 
@@ -171,9 +171,9 @@ const FlashcardViewer: React.FC = () => {
                         <span className="flex-grow border-t border-outline/50"></span>
                     </div>
                     <form onSubmit={handleAddCard} className="space-y-4">
-                        <input type="text" value={newFront} onChange={e => setNewFront(e.target.value)} placeholder="Front of card" className="w-full p-3 border border-outline dark:border-dark-outline rounded-lg bg-transparent focus:ring-2 focus:ring-primary focus:outline-none" required />
-                        <textarea value={newBack} onChange={e => setNewBack(e.target.value)} placeholder="Back of card" className="w-full p-3 border border-outline dark:border-dark-outline rounded-lg bg-transparent focus:ring-2 focus:ring-primary focus:outline-none" rows={3} required />
-                        <button type="submit" className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow">Add Card</button>
+                        <input type="text" value={newFront} onChange={e => setNewFront(e.target.value)} placeholder="Front of card (Question/Term)" className="block w-full px-4 py-3 bg-surface-variant/40 dark:bg-dark-surface-variant/40 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary transition" required />
+                        <textarea value={newBack} onChange={e => setNewBack(e.target.value)} placeholder="Back of card (Answer/Definition)" className="block w-full px-4 py-3 bg-surface-variant/40 dark:bg-dark-surface-variant/40 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary transition" rows={3} required />
+                        <button type="submit" className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full px-6 py-3 shadow-elevation-1 hover:shadow-elevation-2 transition-all transform hover:scale-[1.02]">Add Card</button>
                     </form>
                 </div>
             </Card>

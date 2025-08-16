@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>AI Exam Companion</title>
     <!-- Material Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
           extend: {
             colors: {
               // Material You-inspired theme
-              primary: '#4285F4', // Google Blue
+              primary: '#4285F4',
               'on-primary': '#FFFFFF',
               'primary-container': '#D2E3FC',
               'on-primary-container': '#001D35',
@@ -35,7 +35,7 @@
               'on-error': '#FFFFFF',
               'error-container': '#F9DEDC',
               'on-error-container': '#410E0B',
-              background: '#F8F9FA', // Off-white
+              background: '#F8F9FA',
               'on-background': '#191C1D',
               surface: '#FFFFFF',
               'on-surface': '#191C1D',
@@ -48,11 +48,33 @@
               'dark-on-primary-container': '#D6E3FF',
               'dark-background': '#121212',
               'dark-on-background': '#E2E2E6',
-              'dark-surface': '#1E1E1E', // Slightly lighter than background
+              'dark-surface': '#1E1E1E',
               'dark-on-surface': '#E2E2E6',
               'dark-surface-variant': '#44474E',
               'dark-on-surface-variant': '#C4C6CF',
               'dark-outline': '#8E9099'
+            },
+            boxShadow: {
+              // Material Design Elevation Levels
+              'elevation-1': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+              'elevation-2': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              'elevation-3': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              'elevation-4': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            },
+             keyframes: {
+               gradient: {
+                '0%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+                '100%': { backgroundPosition: '0% 50%' },
+              },
+              fadeIn: {
+                '0%': { opacity: 0, transform: 'translateY(10px)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' },
+              }
+            },
+            animation: {
+              gradient: 'gradient 30s ease infinite',
+              'fade-in': 'fadeIn 0.5s ease-out forwards',
             }
           }
         }
@@ -72,11 +94,6 @@
       .material-symbols-outlined.fill {
         font-variation-settings: 'FILL' 1;
       }
-      @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
       .animated-gradient {
         background: linear-gradient(-45deg, #001D35, #2D4877, #4285F4, #003355);
         background-size: 400% 400%;
@@ -94,6 +111,18 @@
       }
       ::-webkit-scrollbar-thumb:hover {
         background: rgba(128, 128, 128, 0.7);
+      }
+      /* Add padding for safe areas on iOS devices with notches */
+      body {
+        padding-top: constant(safe-area-inset-top);
+        padding-right: constant(safe-area-inset-right);
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-left: constant(safe-area-inset-left);
+
+        padding-top: env(safe-area-inset-top);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
       }
     </style>
   <script type="importmap">

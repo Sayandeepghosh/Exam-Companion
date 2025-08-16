@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDarkMode } from '../hooks/useDarkMode';
 import type { Page } from '../types';
-import { CloseIcon, SunIcon, MoonIcon, TableIcon, FormulaIcon, PuzzleIcon, ProgressIcon, TestbookIcon, FocusIcon } from './Icons';
+import { CloseIcon, SunIcon, MoonIcon, TableIcon, FormulaIcon, PuzzleIcon, ProgressIcon, TestbookIcon, FocusIcon, HomeIcon, ExamIcon, NotesIcon, RevisionIcon, QuizIcon } from './Icons';
 import type { IconProps } from './Icons';
 
 interface SideMenuProps {
@@ -21,11 +21,12 @@ const NavItem: React.FC<{
   return (
     <button
       onClick={() => setActivePage(page)}
-      className={`flex items-center w-full px-4 py-2.5 text-left rounded-full transition-colors ${
+      className={`flex items-center w-full px-4 py-2.5 text-left rounded-full transition-colors duration-200 ${
         isActive ? 'bg-primary-container dark:bg-dark-primary-container text-on-primary-container dark:text-dark-on-primary-container' : 'hover:bg-on-surface/10 text-on-surface-variant dark:text-dark-on-surface-variant'
       }`}
+      aria-current={isActive ? 'page' : undefined}
     >
-      <span className="mr-3">{React.cloneElement(icon, { isActive })}</span>
+      <div className="mr-4">{React.cloneElement(icon, { isActive })}</div>
       <span className="font-medium text-sm">{page}</span>
     </button>
   );
@@ -33,7 +34,16 @@ const NavItem: React.FC<{
 
 const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose, activePage, setActivePage }) => {
     const [isDarkMode, setIsDarkMode] = useDarkMode();
-    const navItems: { page: Page; icon: React.ReactElement }[] = [
+    
+    const mainNavItems: { page: Page; icon: React.ReactElement }[] = [
+        { page: 'Home', icon: <HomeIcon /> },
+        { page: 'Exams', icon: <ExamIcon /> },
+        { page: 'Notes', icon: <NotesIcon /> },
+        { page: 'Revision', icon: <RevisionIcon /> },
+        { page: 'Quiz', icon: <QuizIcon /> },
+    ];
+    
+    const secondaryNavItems: { page: Page; icon: React.ReactElement }[] = [
         { page: 'Tables', icon: <TableIcon /> },
         { page: 'Formulas', icon: <FormulaIcon /> },
         { page: 'Puzzles', icon: <PuzzleIcon /> },
@@ -42,35 +52,47 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose, activePage, setAct
         { page: 'Testbook', icon: <TestbookIcon /> },
     ];
 
+    const menuContent = (
+      <>
+        <div className="flex items-center justify-between p-4 border-b border-outline/20 dark:border-dark-outline/20 h-16">
+            <h2 className="text-lg font-medium text-on-surface dark:text-dark-on-surface">AI Companion</h2>
+            <button onClick={onClose} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-on-surface/10 dark:hover:bg-dark-on-surface/10"><CloseIcon /></button>
+        </div>
+        <nav className="p-4 space-y-1 flex-1 overflow-y-auto">
+            {mainNavItems.map(item => (
+                <NavItem key={item.page} {...item} activePage={activePage} setActivePage={setActivePage} />
+            ))}
+            <hr className="my-3 border-outline/30 dark:border-dark-outline/30" />
+            {secondaryNavItems.map(item => (
+                <NavItem key={item.page} {...item} activePage={activePage} setActivePage={setActivePage} />
+            ))}
+        </nav>
+
+        <div className="p-4 border-t border-outline/20 dark:border-dark-outline/20">
+            <div className="flex items-center justify-between">
+                 <span className="font-medium text-sm text-on-surface dark:text-dark-on-surface">Theme</span>
+                 <button
+                    onClick={() => setIsDarkMode(!isDarkMode)}
+                    className="p-2 w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant dark:text-dark-on-surface-variant hover:bg-on-surface/10 dark:hover:bg-dark-on-surface/10"
+                    aria-label="Toggle dark mode"
+                  >
+                    {isDarkMode ? <SunIcon /> : <MoonIcon />}
+                  </button>
+            </div>
+        </div>
+      </>
+    );
+
     return (
         <>
+            {/* Modal Drawer for all screen sizes */}
             <div 
                 className={`fixed inset-0 bg-black/60 z-30 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={onClose}
+                aria-hidden="true"
             />
-            <aside className={`fixed top-0 left-0 h-full w-80 bg-surface dark:bg-dark-surface shadow-xl z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="flex items-center justify-between p-4 border-b border-outline/20 dark:border-dark-outline/20 h-16">
-                    <h2 className="text-lg font-medium">Menu</h2>
-                    <button onClick={onClose} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-on-surface/10 dark:hover:bg-dark-on-surface/10"><CloseIcon /></button>
-                </div>
-                <nav className="p-4 space-y-2">
-                    {navItems.map(item => (
-                        <NavItem key={item.page} {...item} activePage={activePage} setActivePage={setActivePage} />
-                    ))}
-                </nav>
-
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-outline/20 dark:border-dark-outline/20">
-                    <div className="flex items-center justify-between">
-                         <span className="font-medium text-on-surface dark:text-dark-on-surface">Theme</span>
-                         <button
-                            onClick={() => setIsDarkMode(!isDarkMode)}
-                            className="p-2 w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant dark:text-dark-on-surface-variant hover:bg-on-surface/10 dark:hover:bg-dark-on-surface/10"
-                            aria-label="Toggle dark mode"
-                          >
-                            {isDarkMode ? <SunIcon /> : <MoonIcon />}
-                          </button>
-                    </div>
-                </div>
+            <aside className={`fixed top-0 left-0 h-full w-80 bg-surface dark:bg-dark-surface shadow-xl z-40 transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                {menuContent}
             </aside>
         </>
     );

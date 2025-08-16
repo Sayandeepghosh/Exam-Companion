@@ -4,6 +4,13 @@ import { generateReasoningPuzzle } from '../../services/geminiService';
 
 type PuzzleType = 'Blood Relations' | 'Coding-Decoding' | 'Seating Arrangement';
 
+const Loader: React.FC = () => (
+    <div className="flex flex-col items-center justify-center text-center space-y-4 p-8 animate-fade-in">
+        <div className="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-primary dark:border-dark-primary"></div>
+        <p className="mt-4 text-on-surface-variant dark:text-dark-on-surface-variant">AI is creating a puzzle...</p>
+    </div>
+);
+
 const PuzzleScreen: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [puzzle, setPuzzle] = useState<{ puzzle: string; solution: string } | null>(null);
@@ -21,28 +28,23 @@ const PuzzleScreen: React.FC = () => {
     const puzzleTypes: PuzzleType[] = ['Blood Relations', 'Coding-Decoding', 'Seating Arrangement'];
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             <Card>
-                <h2 className="text-xl font-medium mb-4">Reasoning Puzzle Zone</h2>
+                <h2 className="text-2xl font-medium mb-2">Reasoning Puzzle Zone</h2>
                 <p className="text-on-surface-variant dark:text-dark-on-surface-variant mb-4">Select a topic to generate a random practice puzzle.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {puzzleTypes.map(type => (
-                        <button key={type} onClick={() => handleGeneratePuzzle(type)} disabled={isLoading} className="bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full py-2.5 px-4 shadow-sm hover:shadow-md transition-shadow disabled:bg-primary/50 dark:disabled:bg-dark-primary/50">
+                        <button key={type} onClick={() => handleGeneratePuzzle(type)} disabled={isLoading} className="bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full py-2.5 px-4 shadow-elevation-1 hover:shadow-elevation-2 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:scale-100">
                             {type}
                         </button>
                     ))}
                 </div>
             </Card>
 
-            {isLoading && (
-                 <div className="text-center p-8">
-                    <div className="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-primary dark:border-dark-primary mx-auto"></div>
-                    <p className="mt-4 text-on-surface-variant dark:text-dark-on-surface-variant">AI is creating a puzzle...</p>
-                </div>
-            )}
+            {isLoading && <Loader />}
 
             {puzzle && (
-                <Card>
+                <Card className="animate-fade-in">
                     <h3 className="text-lg font-medium mb-2">Your Puzzle:</h3>
                     <p className="whitespace-pre-wrap text-on-surface dark:text-dark-on-surface mb-6">{puzzle.puzzle}</p>
                     
@@ -51,7 +53,7 @@ const PuzzleScreen: React.FC = () => {
                             Show Solution
                         </button>
                     ) : (
-                        <div className="p-4 bg-tertiary-container/50 dark:bg-dark-tertiary-container/50 border border-tertiary-container dark:border-dark-tertiary-container rounded-2xl">
+                        <div className="p-4 bg-tertiary-container/50 dark:bg-dark-tertiary-container/50 border border-transparent rounded-2xl animate-fade-in">
                              <h3 className="text-lg font-medium text-on-tertiary-container dark:text-dark-on-tertiary-container mb-2">Solution:</h3>
                              <p className="whitespace-pre-wrap text-on-tertiary-container/90 dark:text-dark-on-tertiary-container/90">{puzzle.solution}</p>
                         </div>

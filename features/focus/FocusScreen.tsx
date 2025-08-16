@@ -23,7 +23,7 @@ const playSound = () => {
         gainNode.connect(audioContext.destination);
         
         oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5 note
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
         gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
         
         gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.8);
@@ -35,7 +35,7 @@ const playSound = () => {
 };
 
 const FocusScreen: React.FC = () => {
-    const [duration, setDuration] = useState(25); // in minutes
+    const [duration, setDuration] = useState(25);
     const [timeLeft, setTimeLeft] = useState(25 * 60);
     const [isActive, setIsActive] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
@@ -111,13 +111,13 @@ const FocusScreen: React.FC = () => {
                 <div className="absolute bottom-12 md:bottom-16 flex space-x-4 md:space-x-6">
                     <button 
                         onClick={togglePause} 
-                        className="bg-white/10 backdrop-blur-sm text-white font-semibold py-3 px-6 md:px-8 rounded-2xl hover:bg-white/20 transition-colors text-md md:text-lg"
+                        className="bg-white/10 backdrop-blur-sm text-white font-semibold py-3 px-6 md:px-8 rounded-full hover:bg-white/20 transition-colors text-md md:text-lg"
                     >
                         {isPaused ? 'Resume' : 'Pause'}
                     </button>
                     <button 
                         onClick={() => handleEndSession(false)} 
-                        className="bg-error/80 backdrop-blur-sm text-white font-semibold py-3 px-6 md:px-8 rounded-2xl hover:bg-error transition-colors text-md md:text-lg"
+                        className="bg-error/80 backdrop-blur-sm text-white font-semibold py-3 px-6 md:px-8 rounded-full hover:bg-error transition-colors text-md md:text-lg"
                     >
                         End Session
                     </button>
@@ -127,7 +127,7 @@ const FocusScreen: React.FC = () => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             <Card>
                 <h1 className="text-3xl font-bold mb-2">Focus Mode</h1>
                 <p className="text-on-surface-variant dark:text-dark-on-surface-variant mb-6">
@@ -157,7 +157,7 @@ const FocusScreen: React.FC = () => {
                             <button 
                                 key={sound}
                                 onClick={() => setSelectedSound(sound)}
-                                className={`p-3 rounded-xl font-semibold transition ${selectedSound === sound ? 'bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary ring-2 ring-offset-2 ring-offset-surface dark:ring-offset-dark-surface ring-primary dark:ring-dark-primary' : 'bg-surface-variant/60 dark:bg-dark-surface-variant/60 hover:bg-surface-variant dark:hover:bg-dark-surface-variant'}`}
+                                className={`p-3 rounded-xl font-semibold transition ${selectedSound.toLowerCase() === sound.toLowerCase() ? 'bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary ring-2 ring-offset-2 ring-offset-surface dark:ring-offset-dark-surface ring-primary dark:ring-dark-primary' : 'bg-surface-variant/60 dark:bg-dark-surface-variant/60 hover:bg-surface-variant dark:hover:bg-dark-surface-variant'}`}
                             >
                                 {sound}
                             </button>
@@ -168,7 +168,7 @@ const FocusScreen: React.FC = () => {
                 <div className="mt-8">
                     <button 
                         onClick={handleStartSession}
-                        className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-bold py-3.5 px-4 rounded-full hover:opacity-90 transition-opacity text-lg"
+                        className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-bold py-3.5 px-4 rounded-full hover:opacity-90 transition-opacity text-lg shadow-elevation-1 hover:shadow-elevation-2"
                     >
                         Start Focus Session
                     </button>

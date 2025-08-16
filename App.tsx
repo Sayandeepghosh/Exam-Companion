@@ -44,15 +44,21 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen font-sans text-on-background bg-background dark:bg-dark-background dark:text-dark-on-background">
-      <Header activePage={activePage} onMenuClick={() => setIsMenuOpen(true)} />
+    <div className="min-h-screen font-sans text-on-background bg-background dark:bg-dark-background dark:text-dark-on-background flex">
       <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} activePage={activePage} setActivePage={handlePageSelect} />
-      <main className="pt-20 pb-24">
-        <div className="container p-4 mx-auto max-w-4xl">
-          {renderPage()}
+      
+      <div className="flex-1 flex flex-col"> {/* Removed md:ml-80 for full-width layout */}
+        <Header activePage={activePage} onMenuClick={() => setIsMenuOpen(true)} />
+        <main className="flex-1 pt-16 pb-20 md:pb-8">
+            <div className="container p-4 md:p-8 mx-auto max-w-5xl h-full">
+            {renderPage()}
+            </div>
+        </main>
+        {/* Bottom Nav only for mobile */}
+        <div className="md:hidden">
+            <BottomNav activePage={activePage} setActivePage={handlePageSelect} />
         </div>
-      </main>
-      <BottomNav activePage={activePage} setActivePage={handlePageSelect} />
+      </div>
     </div>
   );
 };
