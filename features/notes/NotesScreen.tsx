@@ -57,7 +57,7 @@ const NotesScreen: React.FC = () => {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">Notes</h1>
-                <button onClick={handleCreateNewNote} className="bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-primary-700 transition">
+                <button onClick={handleCreateNewNote} className="bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium py-2.5 px-6 rounded-2xl hover:opacity-90 transition">
                     New Note
                 </button>
             </div>
@@ -65,8 +65,8 @@ const NotesScreen: React.FC = () => {
                 <div className="space-y-4">
                     {notes.sort((a,b) => b.createdAt - a.createdAt).map(note => (
                         <Card key={note.id} onClick={() => handleSelectNote(note)} className="cursor-pointer">
-                            <h2 className="font-bold text-lg truncate">{note.title}</h2>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            <h2 className="font-medium text-lg truncate">{note.title}</h2>
+                            <p className="text-sm text-on-surface-variant dark:text-dark-on-surface-variant mt-1">
                                 {new Date(note.createdAt).toLocaleDateString()}
                             </p>
                         </Card>
@@ -74,8 +74,8 @@ const NotesScreen: React.FC = () => {
                 </div>
             ) : (
                 <div className="text-center py-20">
-                    <h2 className="text-xl font-semibold text-gray-500">No Notes Yet</h2>
-                    <p className="text-gray-400 mt-2">Tap 'New Note' to get started.</p>
+                    <h2 className="text-xl font-medium text-on-surface-variant dark:text-dark-on-surface-variant">No Notes Yet</h2>
+                    <p className="text-on-surface-variant/80 dark:text-dark-on-surface-variant/80 mt-2">Tap 'New Note' to get started.</p>
                 </div>
             )}
         </div>
@@ -192,48 +192,52 @@ const NoteEditor: React.FC<{ note: Note, onSave: (note: Note) => void, onDelete:
 
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 pb-20">
             <div className="flex items-center justify-between">
-                <button onClick={onBack} className="text-primary-500 font-semibold">&larr; Back</button>
-                <button onClick={() => onSave(editedNote)} className="bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-primary-700 transition">Save</button>
+                <button onClick={onBack} className="text-primary dark:text-dark-primary font-medium">&larr; Back to Notes</button>
+                <button onClick={() => onSave(editedNote)} className="bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium py-2 px-4 rounded-full hover:opacity-90 transition">Save</button>
             </div>
-            <Card>
-                <input
-                    type="text"
-                    value={editedNote.title}
-                    onChange={(e) => setEditedNote(prev => ({ ...prev, title: e.target.value }))}
-                    placeholder="Note Title"
-                    className="w-full text-2xl font-bold bg-transparent focus:outline-none mb-4 pb-2 border-b border-gray-200 dark:border-gray-700"
-                />
-                <div className="space-y-4">
-                    {editedNote.blocks.map(block => (
-                        <div key={block.id} className="group relative">
-                             <button onClick={() => deleteBlock(block.id)} className="absolute -top-2 -right-2 bg-white dark:bg-gray-800 p-1 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity">
-                                <TrashIcon />
-                            </button>
-                            {block.type === 'text' && (
-                                <textarea
-                                    value={block.content}
-                                    onChange={(e) => updateBlockContent(block.id, e.target.value)}
-                                    placeholder="Start typing..."
-                                    className="w-full p-2 border border-transparent focus:border-gray-300 dark:focus:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-800/50 focus:outline-none min-h-[100px]"
-                                />
-                            )}
-                            {block.type === 'image' && <img src={block.content} alt="note content" className="rounded-lg max-w-full h-auto" />}
-                            {block.type === 'audio' && <audio src={block.content} controls className="w-full" />}
-                        </div>
-                    ))}
+            <Card className="!p-0">
+                <div className="p-4">
+                    <input
+                        type="text"
+                        value={editedNote.title}
+                        onChange={(e) => setEditedNote(prev => ({ ...prev, title: e.target.value }))}
+                        placeholder="Note Title"
+                        className="w-full text-2xl font-bold bg-transparent focus:outline-none mb-4 pb-2 border-b border-outline/30 dark:border-dark-outline/30"
+                    />
+                    <div className="space-y-4">
+                        {editedNote.blocks.map(block => (
+                            <div key={block.id} className="group relative">
+                                 <button onClick={() => deleteBlock(block.id)} className="absolute -top-2 -right-2 bg-surface dark:bg-dark-surface p-1 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <TrashIcon />
+                                </button>
+                                {block.type === 'text' && (
+                                    <textarea
+                                        value={block.content}
+                                        onChange={(e) => updateBlockContent(block.id, e.target.value)}
+                                        placeholder="Start typing..."
+                                        className="w-full p-2 border border-transparent focus:border-outline dark:focus:border-dark-outline rounded-md bg-surface-variant/30 dark:bg-dark-surface-variant/30 focus:outline-none min-h-[100px]"
+                                    />
+                                )}
+                                {block.type === 'image' && <img src={block.content} alt="note content" className="rounded-lg max-w-full h-auto" />}
+                                {block.type === 'audio' && <audio src={block.content} controls className="w-full" />}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </Card>
-            <Card>
-                 <div className="flex items-center justify-around">
-                    <button onClick={() => addBlock('text')} className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-primary-500"><TextIcon /><span className="text-xs mt-1">Text</span></button>
-                    <button onClick={() => addBlock('image')} className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-primary-500"><ImageIcon /><span className="text-xs mt-1">Upload</span></button>
-                     <button onClick={startCamera} className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-primary-500"><CameraIcon /><span className="text-xs mt-1">Camera</span></button>
-                    <button onClick={toggleRecording} className={`flex flex-col items-center hover:text-primary-500 ${isRecording ? 'text-red-500' : 'text-gray-600 dark:text-gray-400'}`}><MicIcon /><span className="text-xs mt-1">{isRecording ? 'Stop' : 'Record'}</span></button>
-                 </div>
-            </Card>
-            <button onClick={() => onDelete(note.id)} className="w-full text-center text-sm text-red-500 hover:underline">
+             <div className="fixed bottom-24 left-1/2 -translate-x-1/2 w-full max-w-md px-4 z-10">
+                <div className="bg-surface/80 dark:bg-dark-surface/80 backdrop-blur-lg rounded-2xl shadow-lg border border-outline/20 dark:border-dark-outline/20">
+                     <div className="flex items-center justify-around p-2">
+                        <button onClick={() => addBlock('text')} className="flex flex-col items-center text-on-surface-variant dark:text-dark-on-surface-variant hover:text-primary dark:hover:text-dark-primary w-16 h-16 justify-center rounded-xl"><TextIcon /><span className="text-xs mt-1">Text</span></button>
+                        <button onClick={() => addBlock('image')} className="flex flex-col items-center text-on-surface-variant dark:text-dark-on-surface-variant hover:text-primary dark:hover:text-dark-primary w-16 h-16 justify-center rounded-xl"><ImageIcon /><span className="text-xs mt-1">Upload</span></button>
+                         <button onClick={startCamera} className="flex flex-col items-center text-on-surface-variant dark:text-dark-on-surface-variant hover:text-primary dark:hover:text-dark-primary w-16 h-16 justify-center rounded-xl"><CameraIcon /><span className="text-xs mt-1">Camera</span></button>
+                        <button onClick={toggleRecording} className={`flex flex-col items-center hover:text-primary dark:hover:text-dark-primary w-16 h-16 justify-center rounded-xl ${isRecording ? 'text-error' : 'text-on-surface-variant dark:text-dark-on-surface-variant'}`}><MicIcon /><span className="text-xs mt-1">{isRecording ? 'Stop' : 'Record'}</span></button>
+                     </div>
+                </div>
+            </div>
+            <button onClick={() => onDelete(note.id)} className="w-full text-center text-sm text-error hover:underline pt-4">
                 Delete Note
             </button>
             <input type="file" accept="image/*" ref={imageInputRef} onChange={(e) => e.target.files && handleImageUpload(e.target.files[0])} className="hidden" />
@@ -242,8 +246,8 @@ const NoteEditor: React.FC<{ note: Note, onSave: (note: Note) => void, onDelete:
                 <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
                     <video ref={videoRef} autoPlay playsInline className="w-full max-w-2xl h-auto rounded-lg mb-6" />
                     <div className="flex space-x-4">
-                        <button onClick={handleCapture} className="bg-primary-600 text-white font-bold py-3 px-6 rounded-full">Capture</button>
-                        <button onClick={stopCamera} className="bg-gray-700 text-white font-bold py-3 px-6 rounded-full">Cancel</button>
+                        <button onClick={handleCapture} className="bg-primary text-on-primary font-bold py-3 px-6 rounded-full">Capture</button>
+                        <button onClick={stopCamera} className="bg-secondary text-on-secondary font-bold py-3 px-6 rounded-full">Cancel</button>
                     </div>
                 </div>
             )}

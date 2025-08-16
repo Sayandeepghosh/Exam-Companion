@@ -9,11 +9,11 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ activePage, onMenuClick }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-20 flex items-center justify-between p-4 bg-gray-50/80 dark:bg-black/80 backdrop-blur-lg border-b border-gray-200/80 dark:border-gray-800/80">
-      <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{activePage}</h1>
+    <header className="fixed top-0 left-0 right-0 z-20 flex items-center justify-between p-4 h-16 bg-surface/80 dark:bg-dark-surface/80 backdrop-blur-lg border-b border-outline/20 dark:border-dark-outline/20">
+      <h1 className="text-xl font-medium text-on-surface dark:text-dark-on-surface">{activePage}</h1>
       <button
         onClick={onMenuClick}
-        className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-900 transition-colors"
+        className="flex items-center justify-center w-10 h-10 rounded-full text-on-surface-variant dark:text-dark-on-surface-variant hover:bg-on-surface/10 dark:hover:bg-dark-on-surface/10 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
         aria-label="Open menu"
       >
         <MenuIcon />

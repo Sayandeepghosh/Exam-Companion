@@ -127,7 +127,7 @@ const FlashcardViewer: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-xl font-semibold">Flashcard Review</h2>
+            <h2 className="text-xl font-medium">Flashcard Review</h2>
             {reviewDeck.length > 0 ? (
                  <Card>
                     <div 
@@ -135,45 +135,45 @@ const FlashcardViewer: React.FC = () => {
                         onClick={() => setIsFlipped(!isFlipped)}
                         style={{ perspective: '1000px' }}
                     >
-                         <div className={`absolute w-full h-full transition-transform duration-700 transform-style-3d bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex items-center justify-center backface-hidden ${isFlipped ? 'rotate-y-180' : ''}`}>
+                         <div className={`absolute w-full h-full transition-transform duration-700 [transform-style:preserve-3d] bg-surface-variant dark:bg-dark-surface-variant rounded-2xl p-4 flex items-center justify-center [backface-visibility:hidden] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}>
                             {currentCard?.front}
                         </div>
-                        <div className={`absolute w-full h-full transition-transform duration-700 transform-style-3d bg-primary-100 dark:bg-primary-900/50 rounded-lg p-4 flex items-center justify-center backface-hidden rotate-y-180 ${isFlipped ? 'rotate-y-0' : ''}`}>
+                        <div className={`absolute w-full h-full transition-transform duration-700 [transform-style:preserve-3d] bg-primary-container dark:bg-dark-primary-container text-on-primary-container dark:text-dark-on-primary-container rounded-2xl p-4 flex items-center justify-center [backface-visibility:hidden] [transform:rotateY(-180deg)] ${isFlipped ? '[transform:rotateY(0deg)]' : ''}`}>
                             {currentCard?.back}
                         </div>
                     </div>
                      {isFlipped && (
                         <div className="mt-4 grid grid-cols-3 gap-2">
-                             <button onClick={() => handleAnswer('Hard')} className="bg-red-500/80 text-white font-semibold p-3 rounded-lg hover:bg-red-500 transition">Hard</button>
-                             <button onClick={() => handleAnswer('Good')} className="bg-yellow-500/80 text-white font-semibold p-3 rounded-lg hover:bg-yellow-500 transition">Good</button>
-                             <button onClick={() => handleAnswer('Easy')} className="bg-green-500/80 text-white font-semibold p-3 rounded-lg hover:bg-green-500 transition">Easy</button>
+                             <button onClick={() => handleAnswer('Hard')} className="bg-error-container text-on-error-container font-semibold p-3 rounded-full hover:opacity-90 transition">Hard</button>
+                             <button onClick={() => handleAnswer('Good')} className="bg-tertiary-container text-on-tertiary-container font-semibold p-3 rounded-full hover:opacity-90 transition">Good</button>
+                             <button onClick={() => handleAnswer('Easy')} className="bg-primary-container text-on-primary-container font-semibold p-3 rounded-full hover:opacity-90 transition">Easy</button>
                         </div>
                      )}
                  </Card>
             ) : (
-                <p className="text-center text-gray-500 dark:text-gray-400 py-10">No flashcards to review right now. Come back later or add some new ones!</p>
+                <p className="text-center text-on-surface-variant dark:text-dark-on-surface-variant py-10">No flashcards to review right now. Come back later or add some new ones!</p>
             )}
 
             <Card>
-                <h3 className="text-lg font-semibold mb-4">Add New Flashcard</h3>
+                <h3 className="text-lg font-medium mb-4">Add New Flashcard</h3>
                 <div className="space-y-4">
                     <button 
                       type="button" 
                       onClick={startCamera} 
-                      className="w-full flex items-center justify-center bg-gray-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-secondary-container dark:bg-dark-primary-container text-on-secondary-container dark:text-dark-on-primary-container font-medium py-3 px-4 rounded-full hover:opacity-90 transition-opacity"
                     >
                         <CameraIcon />
                         <span>Scan with Camera</span>
                     </button>
-                    <div className="flex items-center text-xs text-gray-400">
-                        <span className="flex-grow border-t border-gray-300 dark:border-gray-700"></span>
+                    <div className="flex items-center text-xs text-outline">
+                        <span className="flex-grow border-t border-outline/50"></span>
                         <span className="px-2">OR</span>
-                        <span className="flex-grow border-t border-gray-300 dark:border-gray-700"></span>
+                        <span className="flex-grow border-t border-outline/50"></span>
                     </div>
                     <form onSubmit={handleAddCard} className="space-y-4">
-                        <input type="text" value={newFront} onChange={e => setNewFront(e.target.value)} placeholder="Front of card" className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md dark:bg-gray-800/50 focus:ring-2 focus:ring-primary-500 focus:outline-none" required />
-                        <textarea value={newBack} onChange={e => setNewBack(e.target.value)} placeholder="Back of card" className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md dark:bg-gray-800/50 focus:ring-2 focus:ring-primary-500 focus:outline-none" rows={3} required />
-                        <button type="submit" className="w-full bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">Add Card</button>
+                        <input type="text" value={newFront} onChange={e => setNewFront(e.target.value)} placeholder="Front of card" className="w-full p-3 border border-outline dark:border-dark-outline rounded-lg bg-transparent focus:ring-2 focus:ring-primary focus:outline-none" required />
+                        <textarea value={newBack} onChange={e => setNewBack(e.target.value)} placeholder="Back of card" className="w-full p-3 border border-outline dark:border-dark-outline rounded-lg bg-transparent focus:ring-2 focus:ring-primary focus:outline-none" rows={3} required />
+                        <button type="submit" className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow">Add Card</button>
                     </form>
                 </div>
             </Card>
@@ -187,12 +187,12 @@ const FlashcardViewer: React.FC = () => {
 
             {isCameraOpen && (
                 <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
-                    <video ref={videoRef} autoPlay playsInline className="w-full max-w-2xl h-auto rounded-lg mb-6 shadow-lg border-2 border-gray-600" />
+                    <video ref={videoRef} autoPlay playsInline className="w-full max-w-2xl h-auto rounded-lg mb-6 shadow-lg border-2 border-dark-outline" />
                     <div className="flex space-x-4">
-                        <button onClick={handleCapture} className="bg-primary-600 text-white font-bold py-3 px-6 rounded-full hover:bg-primary-700 transition-transform hover:scale-105">
+                        <button onClick={handleCapture} className="bg-primary text-on-primary font-bold py-3 px-6 rounded-full hover:opacity-90 transition-transform hover:scale-105">
                             Capture
                         </button>
-                        <button onClick={stopCamera} className="bg-gray-700 text-white font-bold py-3 px-6 rounded-full hover:bg-gray-600 transition-transform hover:scale-105">
+                        <button onClick={stopCamera} className="bg-secondary text-on-secondary font-bold py-3 px-6 rounded-full hover:opacity-90 transition-transform hover:scale-105">
                             Cancel
                         </button>
                     </div>

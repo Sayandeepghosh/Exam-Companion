@@ -5,10 +5,10 @@ type CalculationType = 'tables' | 'squares' | 'cubes' | 'squareRoots' | 'cubeRoo
 
 const CalculationResult: React.FC<{ title: string; data: { n: number; value: string }[] }> = ({ title, data }) => (
     <Card>
-        <h3 className="text-xl font-semibold mb-4 text-center">{title}</h3>
+        <h3 className="text-xl font-medium mb-4 text-center">{title}</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-2 max-h-96 overflow-y-auto p-2">
             {data.map(item => (
-                <div key={item.n} className="text-sm font-mono p-1.5 rounded bg-gray-100 dark:bg-gray-800 text-center">
+                <div key={item.n} className="text-sm font-mono p-1.5 rounded-lg bg-surface-variant dark:bg-dark-surface-variant text-on-surface-variant dark:text-dark-on-surface-variant text-center">
                    {item.value}
                 </div>
             ))}
@@ -56,7 +56,7 @@ const TablesScreen: React.FC = () => {
     const ActionButton: React.FC<{ type: CalculationType; children: React.ReactNode }> = ({ type, children }) => (
          <button
             onClick={() => setActiveCalculation(type)}
-            className={`w-full text-left p-3 border rounded-lg transition-colors font-medium ${activeCalculation === type ? 'bg-primary-500 text-white border-primary-500' : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+            className={`w-full text-left p-3 border rounded-xl transition-colors font-medium ${activeCalculation === type ? 'bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary border-primary dark:border-dark-primary' : 'border-outline dark:border-dark-outline bg-surface dark:bg-dark-surface hover:bg-surface-variant/40 dark:hover:bg-dark-surface-variant/40'}`}
          >
              {children}
          </button>
@@ -65,7 +65,7 @@ const TablesScreen: React.FC = () => {
     return (
         <div className="space-y-6">
             <Card>
-                <h2 className="text-xl font-semibold mb-4">Quick Calculations</h2>
+                <h2 className="text-xl font-medium mb-4">Quick Calculations</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                    <ActionButton type="squares">Squares (1-100)</ActionButton>
                    <ActionButton type="cubes">Cubes (1-100)</ActionButton>
@@ -75,18 +75,18 @@ const TablesScreen: React.FC = () => {
             </Card>
 
             <Card>
-                <h2 className="text-xl font-semibold mb-4">Multiplication Table</h2>
+                <h2 className="text-xl font-medium mb-4">Multiplication Table</h2>
                 <div className="flex items-center space-x-4">
                      <input
                         type="number"
                         value={tableNumber}
                         onChange={(e) => setTableNumber(Number(e.target.value))}
-                        className="w-full px-3 py-2 bg-white dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full px-4 py-3 bg-transparent border border-outline dark:border-dark-outline rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
                         placeholder="Enter a number"
                      />
                      <button
                         onClick={() => setActiveCalculation('tables')}
-                        className="bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors whitespace-nowrap"
+                        className="bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow whitespace-nowrap"
                      >
                         Generate
                      </button>

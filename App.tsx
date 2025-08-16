@@ -44,10 +44,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen font-sans text-gray-800 bg-gray-50 dark:bg-black dark:text-gray-200">
+    <div className="min-h-screen font-sans text-on-background bg-background dark:bg-dark-background dark:text-dark-on-background">
       <Header activePage={activePage} onMenuClick={() => setIsMenuOpen(true)} />
       <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} activePage={activePage} setActivePage={handlePageSelect} />
-      <main className="pt-24 pb-24">
+      <main className="pt-20 pb-24">
         <div className="container p-4 mx-auto max-w-4xl">
           {renderPage()}
         </div>

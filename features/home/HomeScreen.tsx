@@ -34,31 +34,31 @@ const Countdown: React.FC<{ nextExam: Exam | null }> = ({ nextExam }) => {
   if (!nextExam) {
     return (
       <div className="text-center py-8">
-        <h2 className="text-xl font-semibold text-gray-500 dark:text-gray-400">No upcoming exams</h2>
-        <p className="text-gray-400 mt-1">Add an exam to start the countdown!</p>
+        <h2 className="text-xl font-medium text-on-surface-variant dark:text-dark-on-surface-variant">No upcoming exams</h2>
+        <p className="text-on-surface-variant/80 dark:text-dark-on-surface-variant/80 mt-1">Add an exam to start the countdown!</p>
       </div>
     );
   }
 
   return (
     <div className="text-center">
-      <h2 className="text-lg font-medium text-gray-600 dark:text-gray-300 mb-2">Countdown to <span className="font-bold text-primary-500">{nextExam.name}</span></h2>
-      <div className="grid grid-cols-4 gap-4 text-gray-800 dark:text-gray-100">
-        <div className="p-2">
-          <div className="text-4xl lg:text-5xl font-bold text-primary-600 dark:text-primary-400">{String(timeLeft.days).padStart(2, '0')}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Days</div>
+      <h2 className="text-lg font-medium text-on-surface dark:text-dark-on-surface mb-2">Countdown to <span className="font-bold text-primary dark:text-dark-primary">{nextExam.name}</span></h2>
+      <div className="grid grid-cols-4 gap-4 text-on-background dark:text-dark-on-background">
+        <div>
+          <div className="text-4xl lg:text-5xl font-bold text-primary dark:text-dark-primary">{String(timeLeft.days).padStart(2, '0')}</div>
+          <div className="text-xs text-on-surface-variant dark:text-dark-on-surface-variant">Days</div>
         </div>
-        <div className="p-2">
-          <div className="text-4xl lg:text-5xl font-bold text-primary-600 dark:text-primary-400">{String(timeLeft.hours).padStart(2, '0')}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Hours</div>
+        <div>
+          <div className="text-4xl lg:text-5xl font-bold text-primary dark:text-dark-primary">{String(timeLeft.hours).padStart(2, '0')}</div>
+          <div className="text-xs text-on-surface-variant dark:text-dark-on-surface-variant">Hours</div>
         </div>
-        <div className="p-2">
-          <div className="text-4xl lg:text-5xl font-bold text-primary-600 dark:text-primary-400">{String(timeLeft.minutes).padStart(2, '0')}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Minutes</div>
+        <div>
+          <div className="text-4xl lg:text-5xl font-bold text-primary dark:text-dark-primary">{String(timeLeft.minutes).padStart(2, '0')}</div>
+          <div className="text-xs text-on-surface-variant dark:text-dark-on-surface-variant">Minutes</div>
         </div>
-        <div className="p-2">
-          <div className="text-4xl lg:text-5xl font-bold text-primary-600 dark:text-primary-400">{String(timeLeft.seconds).padStart(2, '0')}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Seconds</div>
+        <div>
+          <div className="text-4xl lg:text-5xl font-bold text-primary dark:text-dark-primary">{String(timeLeft.seconds).padStart(2, '0')}</div>
+          <div className="text-xs text-on-surface-variant dark:text-dark-on-surface-variant">Seconds</div>
         </div>
       </div>
     </div>
@@ -87,14 +87,14 @@ const HomeScreen: React.FC = () => {
   const nextExam = getNextExam();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <Card>
         <Countdown nextExam={nextExam} />
       </Card>
       <Card>
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Daily Motivation</h3>
-          <p className="text-lg italic text-gray-600 dark:text-gray-400">"{quote}"</p>
+          <h3 className="text-lg font-medium text-on-surface dark:text-dark-on-surface mb-2">Daily Motivation</h3>
+          <p className="text-lg text-on-surface-variant dark:text-dark-on-surface-variant">"{quote}"</p>
         </div>
       </Card>
     </div>

@@ -82,9 +82,9 @@ const QuizScreen: React.FC = () => {
   if (isLoading) {
     return (
         <div className="flex flex-col items-center justify-center text-center space-y-4 py-16">
-            <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary-500"></div>
-            <h2 className="text-xl font-semibold">{finalResult ? 'Analyzing performance...' : 'Generating your quiz...'}</h2>
-            <p className="text-gray-500">The AI is thinking. This might take a moment.</p>
+            <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary dark:border-dark-primary"></div>
+            <h2 className="text-xl font-medium">{finalResult ? 'Analyzing performance...' : 'Generating your quiz...'}</h2>
+            <p className="text-on-surface-variant dark:text-dark-on-surface-variant">The AI is thinking. This might take a moment.</p>
         </div>
     );
   }
@@ -94,15 +94,15 @@ const QuizScreen: React.FC = () => {
       <Card>
         <div className="text-center">
             <h2 className="text-2xl font-bold mb-2">Quiz Complete!</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">You scored</p>
-            <p className="text-6xl font-bold text-primary-500 mb-6">{finalResult.score} <span className="text-3xl text-gray-500">/ {finalResult.totalQuestions}</span></p>
+            <p className="text-lg text-on-surface-variant dark:text-dark-on-surface-variant mb-6">You scored</p>
+            <p className="text-6xl font-bold text-primary dark:text-dark-primary mb-6">{finalResult.score} <span className="text-3xl text-on-surface-variant">/ {finalResult.totalQuestions}</span></p>
             
-            <div className="my-6 p-4 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-900/30 rounded-lg">
-                <h3 className="font-semibold text-primary-800 dark:text-primary-200 mb-2">🤖 AI Suggestion</h3>
-                <p className="text-sm text-primary-700 dark:text-primary-300">{finalResult.aiSuggestion}</p>
+            <div className="my-6 p-4 bg-primary-container/50 dark:bg-dark-primary-container/50 border border-primary-container dark:border-dark-primary-container rounded-2xl">
+                <h3 className="font-semibold text-on-primary-container dark:text-dark-on-primary-container mb-2">🤖 AI Suggestion</h3>
+                <p className="text-sm text-on-primary-container/80 dark:text-dark-on-primary-container/80">{finalResult.aiSuggestion}</p>
             </div>
 
-            <button onClick={resetQuiz} className="w-full bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+            <button onClick={resetQuiz} className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow">
               Take Another Quiz
             </button>
         </div>
@@ -114,19 +114,19 @@ const QuizScreen: React.FC = () => {
     const question = quiz[currentQuestionIndex];
     return (
       <Card>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Question {currentQuestionIndex + 1} of {quiz.length}</p>
-        <h2 className="text-xl font-semibold mb-6">{question.question}</h2>
+        <p className="text-sm text-on-surface-variant dark:text-dark-on-surface-variant mb-2">Question {currentQuestionIndex + 1} of {quiz.length}</p>
+        <h2 className="text-xl font-medium mb-6">{question.question}</h2>
         <div className="space-y-3">
           {question.options.map((option, index) => {
             const isAnswered = userAnswers[currentQuestionIndex] !== undefined;
             const isSelected = userAnswers[currentQuestionIndex] === index;
             const isCorrect = question.correctAnswer === index;
             
-            let buttonClass = 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800';
+            let buttonClass = 'border-outline dark:border-dark-outline bg-surface-variant/30 dark:bg-dark-surface-variant/30 hover:bg-surface-variant/80';
             if (isAnswered) {
-                if (isSelected && isCorrect) buttonClass = 'bg-green-500/20 text-green-800 dark:text-green-300 border-green-500/30';
-                else if (isSelected && !isCorrect) buttonClass = 'bg-red-500/20 text-red-800 dark:text-red-300 border-red-500/30';
-                else if (isCorrect) buttonClass = 'bg-green-500/20 border-green-500/30';
+                if (isSelected && isCorrect) buttonClass = 'bg-tertiary-container text-on-tertiary-container border-tertiary-container/30';
+                else if (isSelected && !isCorrect) buttonClass = 'bg-error-container text-on-error-container border-error-container/30';
+                else if (isCorrect) buttonClass = 'bg-tertiary-container/50 border-tertiary-container/30';
             }
             
             return (
@@ -134,7 +134,7 @@ const QuizScreen: React.FC = () => {
                 key={index}
                 onClick={() => handleAnswer(index)}
                 disabled={isAnswered}
-                className={`w-full text-left p-4 border rounded-lg transition-all duration-300 ${buttonClass}`}
+                className={`w-full text-left p-4 border rounded-xl transition-all duration-300 ${buttonClass}`}
               >
                 {option}
               </button>
@@ -149,17 +149,17 @@ const QuizScreen: React.FC = () => {
     <div className="space-y-6">
       <Card>
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">AI Quiz Generator</h2>
-          <p className="text-gray-600 dark:text-gray-400">Enter any topic, and our AI will create a quiz to test your knowledge.</p>
+          <h2 className="text-xl font-medium">AI Quiz Generator</h2>
+          <p className="text-on-surface-variant dark:text-dark-on-surface-variant">Enter any topic, and our AI will create a quiz to test your knowledge.</p>
           <input
             type="text"
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="w-full px-3 py-2 bg-white dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-            placeholder="e.g., The Solar System, World War II, React Hooks"
+            className="w-full px-4 py-3 bg-transparent border border-outline dark:border-dark-outline rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
+            placeholder="e.g., The Solar System, React Hooks"
           />
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button onClick={handleStartQuiz} className="w-full bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+          {error && <p className="text-error text-sm">{error}</p>}
+          <button onClick={handleStartQuiz} className="w-full bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-on-primary font-medium rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-shadow">
             Generate Quiz
           </button>
         </div>
